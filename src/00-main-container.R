@@ -1,14 +1,16 @@
 library(shiny)
+library(shinyjs)
 library(ggplot2)
 library(dplyr)
-
+rm(list=ls())
 server <- shinyServer(
   function(input, output, session) {
     # define value jumps for the counters
     jump <- 10
     # define bins
-    nbins <- 2
+    nbins <- 4
     # define and initialize the reactiveValues object depending on the number of bins
+    l <- reactiveValues(lala=0, loli=1)
     counter <- 
       eval(
       parse(text=
@@ -29,11 +31,11 @@ server <- shinyServer(
             paste0(
               paste0(
               'observeEvent(input$add', x, 
-              ', {counter$countervalue <- counter$countervalue + jump'
+              ', {counter$.bin', x, ' <- counter$.bin', x, ' + ifelse(counter$.bin', x, '==100|counter$countervalue==100, 0, jump)'
               ),
               '\n',
               paste0(
-              'counter$.bin', x, ' <- counter$.bin', x, ' + jump',
+              'counter$countervalue <- counter$countervalue + ifelse(counter$countervalue==100, 0, jump)',
               '})'
               )
             )
@@ -48,11 +50,11 @@ server <- shinyServer(
             paste0(
               paste0(
                 'observeEvent(input$sub', x, 
-                ', {counter$countervalue <- counter$countervalue - jump'
+                ', {counter$.bin', x, ' <- counter$.bin', x, ' - ifelse(counter$.bin',x,'<=0|counter$countervalue==100, 0, jump)'
               ),
               '\n',
               paste0(
-                'counter$.bin', x, ' <- counter$.bin', x, ' - jump',
+                'counter$countervalue <- counter$countervalue - ifelse(counter$.bin',x,'<=0, 0, jump)',
                 '})'
               )
             )
@@ -83,27 +85,52 @@ server <- shinyServer(
           )
       )
     )
-    
-    output$plot <- renderPlot({
-      data <- 
-        tibble(
-          bin=1:nbins, 
-          y=eval(
-            parse(
-              text=
-                paste0(
-                  'c(', paste0('counter$.bin', 1:nbins, collapse = ','),')'
-                )
+    eval(
+      parse(
+        text=
+            lapply(1:nbins, function(x){
+              paste0(
+              paste0('output$plot', x,' <- renderPlot({\n
+                     data <- tibble(bin=1, y=counter$.bin', x,')'),
+              '\n',
+             'data %>% ggplot(., aes(x=1, y=y)) +
+                      geom_bar(stat="identity", width=1) +
+                      scale_y_continuous(limits=c(0,100), expand = c(0,0)) +
+                      scale_x_continuous(expand = c(0,0)) +
+                      scale_fill_discrete()+
+                      theme_void()',
+             '})'
+             )
+            })
+      )
+      )
+    if(FALSE){
+      output$plot <- renderPlot({
+        data <- 
+          tibble(
+            bin=1:nbins, 
+            y=eval(
+              parse(
+                text=
+                  paste0(
+                    'c(', paste0('counter$.bin', 1:nbins, collapse = ','),')'
+                  )
+              )
             )
           )
-        )
-      ggplot(data, aes(x=bin, y=y, fill=as.factor(bin))) +
-        geom_bar(stat='identity', width=1) +
-        scale_y_continuous(limits=c(0,100), expand = c(0,0)) +
-        scale_x_continuous(expand = c(0,0)) +
-        scale_fill_discrete()+
-        theme_light()
-    })
+        lapply(1:nbins, function(x){
+          data %>% 
+            filter(bin==x) %>% 
+            ggplot(., aes(x=1, y=y, fill=as.factor(bin))) +
+            geom_bar(stat='identity', width=1) +
+            scale_y_continuous(limits=c(0,100), expand = c(0,0)) +
+            scale_x_continuous(expand = c(0,0)) +
+            scale_fill_discrete() +
+            theme_void()
+        })
+        
+      })
+    }
     
   }
   
@@ -111,25 +138,36 @@ server <- shinyServer(
 
 ui <- shinyUI(
   fluidPage(
+    useShinyjs(),
+    inlineCSS(list(.red = "text-align: center; display: inline-block; width: 20%, position: relative; margin: 20px;",
+                   .blue = "margin: 10px;",
+                   .plot = "display: block; margin: auto;")),
      title="Goldberg & Rothschild Question",
      br(),
      p('Some description'),
-     fluidRow(column(1, div("Bins")),
-              eval(
-                parse(
-                  text= 
-                    sapply(1:nbins, function(x){
-                      paste0('column(', x+1, ', div(textOutput("count.bin', x, '"), "Bin ', x, '", br(), actionButton("add', x, '", "+ ', jump, '"), actionButton("sub', x, '", "- ', jump, '")))')
-                      })
-                )
-              ), 
-              #column(2, div(textOutput("count.bin1"), 'Bin 1', br(), actionButton("add1", "+ 1"), actionButton("sub1", "- 1"))),
-              #column(3, div(textOutput("count.bin2"), 'Bin 2', br(), actionButton("add2", "+ 1"), actionButton("sub2", "- 1"))),
-              column(4, br(), div(actionButton("reset", "Reset")))
-              ),
-     plotOutput("plot", width = "50%"),
-     textOutput("count")
+     fluidRow(
+
+         div("Bins"),
+         lapply(1:4, function(x){
+           eval(
+             parse(
+               text = 
+                 paste0('tags$div(class="red", tags$div(class="blue", textOutput("count.bin', x, '"), "Bin ', x, '", br(), actionButton("add', x, '", "+ 10"), actionButton("sub',x, '", "- 10")), br(), plotOutput("plot', x, '", width = 200))')
+             )
+           )
+         }),
+         #tags$div(class='red', tags$div(class='blue', textOutput("count.bin1"), 'Bin 1', br(), actionButton("add1", "+ 10"), actionButton("sub1", "- 10")), br(), plotOutput('plot1', width = 200)),
+         #tags$div(class='red', tags$div(class='blue', textOutput("count.bin2"), 'Bin 2', br(), actionButton("add2", "+ 10"), actionButton("sub2", "- 10")), br(), plotOutput('plot2', width =200)),
+         div(actionButton("reset", "Reset"))
+       ),
+     # plotOutput("plot", width = "50%"),
+     textOutput("count"),
+    br(),
+    textOutput("val"),
+    br(),
+    textOutput("vals")
   )
 )
 
 shinyApp(ui = ui, server = server)
+
