@@ -4,7 +4,7 @@ library(ggplot2)
 library(dplyr)
 
 # define value jumps for the counters
-jump <- 5
+jump <- 2
 # define bins
 nbins <- 12
 # element you wanna store value of

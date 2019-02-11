@@ -1,0 +1,10 @@
+name: shiny-things
+title:
+username:
+account: quantile-questions
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 707102
+bundleId: 1869174
+url: https://quantile-questions.shinyapps.io/shiny-things/
+when: 1549897170.73502
