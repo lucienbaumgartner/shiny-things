@@ -5,6 +5,8 @@ account: quantile-questions
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 707102
-bundleId: 1869174
+bundleId: 1869742
 url: https://quantile-questions.shinyapps.io/shiny-things/
-when: 1549897170.73502
+when: 1549914430.04123
+asMultiple: FALSE
+asStatic: FALSE
