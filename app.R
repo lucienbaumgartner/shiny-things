@@ -3,9 +3,6 @@ library(shinyjs)
 library(ggplot2)
 library(dplyr)
 
-rm(list=ls())
-setwd('~/shiny-things/src/')
-
 # define value jumps for the counters
 jump <- 5
 # define bins
@@ -175,7 +172,7 @@ server <- shinyServer(
 ui <- shinyUI(
   fluidPage(
     useShinyjs(),
-    includeCSS("style.css"),
+    theme="style.css",
     #inlineCSS(list(.red = "text-align: center; display: inline-block; width: 20%, position: relative; margin: 20px;",
        #            .blue = "margin: 10px;",
        #            .plot = "display: block; margin: auto;")),
