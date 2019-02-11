@@ -2,10 +2,9 @@ library(shiny)
 library(shinyjs)
 library(ggplot2)
 library(dplyr)
+
 rm(list=ls())
 setwd('~/shiny-things/src/')
-
-fields <- c("name", "used_shiny", "r_num_years")
 
 # define value jumps for the counters
 jump <- 5
