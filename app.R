@@ -10,7 +10,7 @@ nbins <- 12
 # element you wanna store value of
 store <- paste0('.bin', 1:nbins)
 # function to save data
-outputDir <- "~/Desktop/"
+outputDir <- "storage/"
 saveData <- function(data) {
   data <- as.data.frame(t(data))
   data <- t(data)
@@ -173,27 +173,22 @@ ui <- shinyUI(
   fluidPage(
     useShinyjs(),
     theme="style.css",
-    #inlineCSS(list(.red = "text-align: center; display: inline-block; width: 20%, position: relative; margin: 20px;",
-       #            .blue = "margin: 10px;",
-       #            .plot = "display: block; margin: auto;")),
      title="Goldberg & Rothschild Question",
      br(),
      h1("Goldberg & Rothschild Question"), 
-     p('Some description'),
+     p('Some description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'),
      fluidRow(
         tags$div(id='panel',
                  lapply(1:12, function(x){
                    eval(
                      parse(
                        text = 
-                         paste0('tags$div(class="red", tags$div(class="blue", h4(textOutput("count.bin', x, '")), h3("Bin ', 
+                         paste0('tags$div(class="red", tags$div(class="blue", h4(textOutput("count.bin', x, '")), h3("', 
                                 paste0(seq(20, 79, 5), '-', seq(24, 79, 5), '%')[x], 
                                 '"), br(), actionButton("add', x, '", "+ ', 5,'"), actionButton("sub',x, '", "- ', 5,'")), br(), tags$div(class="plot", plotOutput("plot', x, '", width = 50)))')
                      )
                    )
                  })
-                 #tags$div(class='red', tags$div(class='blue', textOutput("count.bin1"), 'Bin 1', br(), actionButton("add1", "+ 10"), actionButton("sub1", "- 10")), br(), plotOutput('plot1', width = 200)),
-                 #tags$div(class='red', tags$div(class='blue', textOutput("count.bin2"), 'Bin 2', br(), actionButton("add2", "+ 10"), actionButton("sub2", "- 10")), br(), plotOutput('plot2', width =200)),
                  )
          
     ),
