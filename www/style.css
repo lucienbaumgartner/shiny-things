@@ -44,7 +44,7 @@ img {
     pointer-events: auto;
 }
 
-.red {
+.outer-container {
     text-align: center;
     display: inline-block;
     /*
@@ -54,7 +54,7 @@ img {
     margin: 5px;
 }
 
-.blue {
+.inner-container {
     margin: 10px;
 }
 

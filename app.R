@@ -95,7 +95,7 @@ server <- shinyServer(
       # if the reset button is clicked, set the counter value to zero
     })
     output$count <- renderText({
-      100-counter$countervalue # print the latest value stored in the reactiveValues object
+      100-counter$countervalue # print the latest value stoouter-container in the reactiveValues object
     })
     eval(
       parse(
@@ -183,7 +183,7 @@ ui <- shinyUI(
                    eval(
                      parse(
                        text = 
-                         paste0('tags$div(class="red", tags$div(class="blue", h4(textOutput("count.bin', x, '")), h3("', 
+                         paste0('tags$div(class="outer-container", tags$div(class="inner-container", h4(textOutput("count.bin', x, '")), h3("', 
                                 paste0(seq(20, 79, 5), '-', seq(24, 79, 5), '%')[x], 
                                 '"), br(), actionButton("add', x, '", "+ ', 5,'"), actionButton("sub',x, '", "- ', 5,'")), br(), tags$div(class="plot", plotOutput("plot', x, '", width = 50)))')
                      )
