@@ -3,14 +3,37 @@ library(shinyjs)
 library(ggplot2)
 library(dplyr)
 rm(list=ls())
+setwd('~/shiny-things/src/')
+
+fields <- c("name", "used_shiny", "r_num_years")
+
+# define value jumps for the counters
+jump <- 5
+# define bins
+nbins <- 12
+# element you wanna store value of
+store <- paste0('.bin', 1:nbins)
+# function to save data
+outputDir <- "~/Desktop/"
+saveData <- function(data) {
+  data <- as.data.frame(t(data))
+  data <- t(data)
+  rownames(data) <- paste0(seq(20, 79, 5), '-', seq(24, 79, 5), '%')
+  # Create a unique file name
+  fileName <- sprintf("testdata_%s_%s.csv", as.integer(Sys.time()), digest::digest(data))
+  # Write the file to the local system
+  write.csv(
+    x = data,
+    file = file.path(outputDir, fileName), 
+    quote = TRUE
+  )
+}
+
+
 server <- shinyServer(
   function(input, output, session) {
-    # define value jumps for the counters
-    jump <- 10
-    # define bins
-    nbins <- 4
+    #global <- reactiveValues(done = FALSE)
     # define and initialize the reactiveValues object depending on the number of bins
-    l <- reactiveValues(lala=0, loli=1)
     counter <- 
       eval(
       parse(text=
@@ -54,7 +77,8 @@ server <- shinyServer(
               ),
               '\n',
               paste0(
-                'counter$countervalue <- counter$countervalue - ifelse(counter$.bin',x,'<=0, 0, jump)',
+               # 'counter$countervalue <- counter$countervalue - ifelse(counter$.bin',x,'<=0, 0, jump)',
+                'counter$countervalue <- counter$countervalue - ifelse(counter$countervalue<=0, 0, jump)',
                 '})'
               )
             )
@@ -75,7 +99,7 @@ server <- shinyServer(
       # if the reset button is clicked, set the counter value to zero
     })
     output$count <- renderText({
-      paste('There are', 100-counter$countervalue, 'left.') # print the latest value stored in the reactiveValues object
+      100-counter$countervalue # print the latest value stored in the reactiveValues object
     })
     eval(
       parse(
@@ -97,8 +121,9 @@ server <- shinyServer(
                       geom_bar(stat="identity", width=1) +
                       scale_y_continuous(limits=c(0,100), expand = c(0,0)) +
                       scale_x_continuous(expand = c(0,0)) +
-                      scale_fill_discrete()+
-                      theme_void()',
+                      scale_fill_discrete() +
+                      theme_void()+
+                      theme(plot.background=element_rect(fill="lightblue"))',
              '})'
              )
             })
@@ -131,7 +156,19 @@ server <- shinyServer(
         
       })
     }
-    
+    #observe({
+    #  if(counter$countervalue==100){global$done <- TRUE}else{global$done <- FALSE}
+    #})
+    observe({
+      toggleClass(id = 'submit', class = 'active', condition = counter$countervalue==100)
+    })
+    formData <- reactive({
+      data <- sapply(store, function(x) counter[[x]])
+      data
+    })
+    observeEvent(input$submit, {
+      saveData(formData())
+    })
   }
   
 )
@@ -139,33 +176,40 @@ server <- shinyServer(
 ui <- shinyUI(
   fluidPage(
     useShinyjs(),
-    inlineCSS(list(.red = "text-align: center; display: inline-block; width: 20%, position: relative; margin: 20px;",
-                   .blue = "margin: 10px;",
-                   .plot = "display: block; margin: auto;")),
+    includeCSS("style.css"),
+    #inlineCSS(list(.red = "text-align: center; display: inline-block; width: 20%, position: relative; margin: 20px;",
+       #            .blue = "margin: 10px;",
+       #            .plot = "display: block; margin: auto;")),
      title="Goldberg & Rothschild Question",
      br(),
+     h1("Goldberg & Rothschild Question"), 
      p('Some description'),
      fluidRow(
-
-         div("Bins"),
-         lapply(1:4, function(x){
-           eval(
-             parse(
-               text = 
-                 paste0('tags$div(class="red", tags$div(class="blue", textOutput("count.bin', x, '"), "Bin ', x, '", br(), actionButton("add', x, '", "+ 10"), actionButton("sub',x, '", "- 10")), br(), plotOutput("plot', x, '", width = 200))')
-             )
-           )
-         }),
-         #tags$div(class='red', tags$div(class='blue', textOutput("count.bin1"), 'Bin 1', br(), actionButton("add1", "+ 10"), actionButton("sub1", "- 10")), br(), plotOutput('plot1', width = 200)),
-         #tags$div(class='red', tags$div(class='blue', textOutput("count.bin2"), 'Bin 2', br(), actionButton("add2", "+ 10"), actionButton("sub2", "- 10")), br(), plotOutput('plot2', width =200)),
-         div(actionButton("reset", "Reset"))
-       ),
-     # plotOutput("plot", width = "50%"),
-     textOutput("count"),
-    br(),
-    textOutput("val"),
-    br(),
-    textOutput("vals")
+        tags$div(id='panel',
+                 lapply(1:12, function(x){
+                   eval(
+                     parse(
+                       text = 
+                         paste0('tags$div(class="red", tags$div(class="blue", h4(textOutput("count.bin', x, '")), h3("Bin ', 
+                                paste0(seq(20, 79, 5), '-', seq(24, 79, 5), '%')[x], 
+                                '"), br(), actionButton("add', x, '", "+ ', 5,'"), actionButton("sub',x, '", "- ', 5,'")), br(), tags$div(class="plot", plotOutput("plot', x, '", width = 50)))')
+                     )
+                   )
+                 })
+                 #tags$div(class='red', tags$div(class='blue', textOutput("count.bin1"), 'Bin 1', br(), actionButton("add1", "+ 10"), actionButton("sub1", "- 10")), br(), plotOutput('plot1', width = 200)),
+                 #tags$div(class='red', tags$div(class='blue', textOutput("count.bin2"), 'Bin 2', br(), actionButton("add2", "+ 10"), actionButton("sub2", "- 10")), br(), plotOutput('plot2', width =200)),
+                 )
+         
+    ),
+    fluidRow(
+      tags$div(
+        id='aux',
+        tags$div(id='reset-btn', actionButton("reset", "Reset")),
+        tags$div(id='count-container', div('There are', textOutput("count"), 'left.')),
+        tags$div(id='submit-btn', actionButton('submit', "Submit answer"))
+      )
+      
+    )
   )
 )
 
