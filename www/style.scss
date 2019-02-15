@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css?family=Abril+Fatface|Roboto');
+
+$b-fontsize: 12px;
+$active-color: rgba(0, 129, 60, 0.3);
+$b-font: 'Roboto', sans-serif !important;
+$h-font: 'Abril Fatface', cursive !important;;
+
+/*
+html, body {
+    height: 100%;
+}
+*/
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    width: 80%;
+    display: table-cell;
+    vertical-align: middle;
+    font-size: $b-fontsize;
+    font-family: $b-font;
+}
+
+h3 {
+    font-size: $b-fontsize*1.5 !important;
+    @media screen and (max-width: 400px) {
+        font-size: $b-fontsize*1.2 !important;
+    }
+}
+
+h4 {
+    font-size: $b-fontsize*1.25 !important;
+    @media screen and (max-width: 400px) {
+        font-size: $b-fontsize !important;
+    }
+}
+
+h3, h4 {
+    margin-bottom: -10px;
+}
+
+h1, h3, h4 {
+    font-family: $h-font;
+}
+
+button {
+    font-size: $b-fontsize*0.75 !important;
+    background-color: lightgrey;
+    min-width: 40px;
+    @media screen and (max-width: 320px) {
+        min-width: 20px;
+    }
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    /*
+    border: 0.2px solid darkgrey;
+    box-shadow: 2px 2px grey;
+    */
+}
+
+.submit {
+    pointer-events: none;
+}
+
+.active {
+    background-color: $active-color !important;
+    pointer-events: auto;
+}
+
+.outer-container {
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    margin: 0px;
+    max-width: 40%;
+}
+
+.inner-container {
+    margin: 10px;
+    margin-bottom: 0px;
+    max-width: 100%;
+}
+
+.plot {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+}
+
+.shiny-plot-output {
+    width: 40% !important;
+}
+
+#aux {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    text-align: center;
+}
+
+#reset-btn {
+    display: inline-block;
+    float: left;
+}
+
+#submit-btn{
+    display: inline-block;
+    float: right;
+}
+
+#count-container {
+    display: inline-block;
+    line-height: 2;
+}
+
+#count {
+    display: inline-block;
+    font-weight: bold;
+    font-family: $h-font;
+}
+
+#panel {
+    text-align: center;
+}

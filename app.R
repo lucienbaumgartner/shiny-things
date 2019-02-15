@@ -2,9 +2,10 @@ library(shiny)
 library(shinyjs)
 library(ggplot2)
 library(dplyr)
+library(sass)
 
 # define value jumps for the counters
-jump <- 2
+jump <- 1
 # define bins
 nbins <- 12
 # element you wanna store value of
@@ -114,12 +115,12 @@ server <- shinyServer(
                      data <- tibble(bin=1, y=counter$.bin', x,')'),
               '\n',
              'data %>% ggplot(., aes(x=1, y=y)) +
-                      geom_bar(stat="identity", width=1) +
+                      geom_bar(stat="identity", width=1, fill=rgb(169, 0, 33, maxColorValue = 255)) +
                       scale_y_continuous(limits=c(0,100), expand = c(0,0)) +
                       scale_x_continuous(expand = c(0,0)) +
                       scale_fill_discrete() +
                       theme_void()+
-                      theme(plot.background=element_rect(fill="lightblue"))',
+                      theme(plot.background=element_rect(fill=adjustcolor("lightblue", alpha.f = 0.2)))',
              '})'
              )
             })
@@ -183,9 +184,9 @@ ui <- shinyUI(
                    eval(
                      parse(
                        text = 
-                         paste0('tags$div(class="outer-container", tags$div(class="inner-container", h4(textOutput("count.bin', x, '")), h3("', 
+                         paste0('tags$div(class="outer-container", tags$div(class="inner-container", h3("', 
                                 paste0(seq(20, 79, 5), '-', seq(24, 79, 5), '%')[x], 
-                                '"), br(), actionButton("add', x, '", "+ ', 2,'"), actionButton("sub',x, '", "- ', 2,'")), br(), tags$div(class="plot", plotOutput("plot', x, '", width = 50)))')
+                                '")), br(), tags$div(class="plot", plotOutput("plot', x, '", height=200)), tags$div(class="inner-container", actionButton("add', x, '", "+ ', jump,'"), actionButton("sub',x, '", "- ', jump,'"), br(), h4(textOutput("count.bin', x, '"))))')
                      )
                    )
                  })
@@ -205,4 +206,3 @@ ui <- shinyUI(
 )
 
 shinyApp(ui = ui, server = server)
-
