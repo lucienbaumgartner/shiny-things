@@ -189,7 +189,7 @@ ui <- shinyUI(
                        text =
                          paste0('tags$div(class="outer-container", tags$div(class="inner-container", h3("',
                                 paste0(seq(20, 79, 5), '-', seq(24, 79, 5), '%')[x],
-                                '")), br(), tags$div(class="plot", plotOutput("plot', x, '", height=200)), tags$div(class="inner-container mutate", actionButton("add', x, '", "+"), actionButton("sub',x, '", "--")), tags$h4(class="count", textOutput("count.bin', x, '")))')
+                                '")), br(), tags$div(class="plot", plotOutput("plot', x, '", height=200)), tags$div(class="inner-container mutate", actionButton("sub',x, '", "--"), actionButton("add', x, '", "+")), tags$h4(class="count", textOutput("count.bin', x, '")))')
                      )
                    )
                  })
