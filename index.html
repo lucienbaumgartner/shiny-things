@@ -3,9 +3,7 @@
   <head>
     <title>example</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
     <style>
       @import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
 
@@ -15,6 +13,7 @@
       }
       span {
         font-weight: 700;
+        padding: 0px 5px;
       }
       p {
         font-size: 15px;
@@ -72,9 +71,11 @@
     </div>
   </body>
   <script>
-  var width = 0;
-  var step = 1;
+  // paramters used for basic functionality
+  var width = 0; // starting width of progress bar [do not change]
+  var step = 1; // jump per click
 
+  // basic functionality for progress bars/buttons
   function move(element) {
     var elem = $(element).parent().siblings('.sub-container').children('.counter')
     var clicked_id = $(element).attr('id');
@@ -134,16 +135,23 @@
             }
       });
   }
-
-  var nbins = 12;
+  // define variables used in generating the HTML elements
+  var nbins = 12; // number of bins
+  var bin_jump = 5; // jump between bins
+  var lower_lim = 20; // start value for bins
+  var upper_lim = 80; // end value for bins
+  // generate bin labels
   var labels_lower = [];
   var labels_upper = [];
+  // lower bin caption part
+  for (var i = lower_lim; i < upper_lim; i+=bin_jump) labels_lower.push(i)
+  // upper bin caption part
+  for (var i = lower_lim+bin_jump-1; i < upper_lim; i+=bin_jump) labels_upper.push(i)
 
-  for (var i = 20; i < 80; i+=5) labels_lower.push(i)
-  for (var i = 24; i < 80; i+=5) labels_upper.push(i)
-
+  // function to create the HTML elements
   $(document).ready(function () {
     for(var i = 0; i < nbins; i += 1) {
+      // define DOM-Elements added with each iteration
       var container = document.createElement("div");
       var sub_container = document.createElement("div");
       var btns = document.createElement("div");
@@ -151,27 +159,33 @@
       var buttonadd = document.createElement("button");
       var buttonsub = document.createElement("button");
       var caption = document.createElement("span");
+      // add class names to the elements
       container.className = "container";
       sub_container.className = "sub-container";
       btns.className = "btns";
       buttonadd.className = "add";
       buttonsub.className = "sub";
       bar.className = "counter";
+      // append elements to the body or parents
       document.body.appendChild(container);
       container.appendChild(btns);
       container.appendChild(btns);
       btns.appendChild(buttonsub);
       btns.appendChild(buttonadd);
+      container.appendChild(caption);
+      container.appendChild(sub_container);
+      sub_container.appendChild(bar);
+      // add content and functionality to selected elements
+      //buttons
       $(buttonsub).html('-');
       $(buttonadd).html('+');
       $(buttonsub).attr('id', 'sub'+i);
       $(buttonadd).attr('id', 'add'+i);
       buttonsub.setAttribute('onclick', 'move(this);');
       buttonadd.setAttribute('onclick', 'move(this);');
-      container.appendChild(caption);
+      // bin captions
       $(caption).text(labels_lower[i] + '-' + labels_upper[i] + '%');
-      container.appendChild(sub_container);
-      sub_container.appendChild(bar);
+      // progress bar
       $(bar).html('0');
       $(bar).css('width', '0%');
     }
