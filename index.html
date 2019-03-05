@@ -69,177 +69,11 @@
     <div class="w3-container">
       <h2>Goldberg & Rothschild Question</h2>
       <p>Some description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-      <div class="container">
-        <div class="btns">
-          <button id="sub1" class="sub" onclick="move(this)">-</button>
-          <button id="add1" class="add" onclick="move(this)">+</button>
-        </div>
-        <span>20-24%</span>
-        <div class="sub-container">
-          <div class="counter" style="width:0%">0</div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="btns">
-          <button id="sub2" class="sub" onclick="move(this)">-</button>
-          <button id="add2" class="add" onclick="move(this)">+</button>
-        </div>
-        <span>25-29%</span>
-        <div class="sub-container">
-          <div class="counter" style="width:0%">0</div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="btns">
-          <button id="sub3" class="sub" onclick="move(this)">-</button>
-          <button id="add" class="add" onclick="move(this)">+</button>
-        </div>
-        <span>30-34%</span>
-        <div class="sub-container">
-          <div class="counter" style="width:0%">0</div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="btns">
-          <button id="sub4" class="sub" onclick="move(this)">-</button>
-          <button id="add4" class="add" onclick="move(this)">+</button>
-        </div>
-        <span>35-39%</span>
-        <div class="sub-container">
-          <div class="counter" style="width:0%">0</div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="btns">
-          <button id="sub5" class="sub" onclick="move(this)">-</button>
-          <button id="add5" class="add" onclick="move(this)">+</button>
-        </div>
-        <span>40-44%</span>
-        <div class="sub-container">
-          <div class="counter" style="width:0%">0</div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="btns">
-          <button id="sub6" class="sub" onclick="move(this)">-</button>
-          <button id="add6" class="add" onclick="move(this)">+</button>
-        </div>
-        <span>45-49%</span>
-        <div class="sub-container">
-          <div class="counter" style="width:0%">0</div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="btns">
-          <button id="sub7" class="sub" onclick="move(this)">-</button>
-          <button id="add7" class="add" onclick="move(this)">+</button>
-        </div>
-        <span>50-54%</span>
-        <div class="sub-container">
-          <div class="counter" style="width:0%">0</div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="btns">
-          <button id="sub8" class="sub" onclick="move(this)">-</button>
-          <button id="add8" class="add" onclick="move(this)">+</button>
-        </div>
-        <span>55-59%</span>
-        <div class="sub-container">
-          <div class="counter" style="width:0%">0</div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="btns">
-          <button id="sub8" class="sub" onclick="move(this)">-</button>
-          <button id="add8" class="add" onclick="move(this)">+</button>
-        </div>
-        <span>60-64%</span>
-        <div class="sub-container">
-          <div class="counter" style="width:0%">0</div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="btns">
-          <button id="sub8" class="sub" onclick="move(this)">-</button>
-          <button id="add8" class="add" onclick="move(this)">+</button>
-        </div>
-        <span>65-69%</span>
-        <div class="sub-container">
-          <div class="counter" style="width:0%">0</div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="btns">
-          <button id="sub8" class="sub" onclick="move(this)">-</button>
-          <button id="add8" class="add" onclick="move(this)">+</button>
-        </div>
-        <span>70-74%</span>
-        <div class="sub-container">
-          <div class="counter" style="width:0%">0</div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="btns">
-          <button id="sub8" class="sub" onclick="move(this)">-</button>
-          <button id="add8" class="add" onclick="move(this)">+</button>
-        </div>
-        <span>75-79%</span>
-        <div class="sub-container">
-          <div class="counter" style="width:0%">0</div>
-        </div>
-      </div>
-
-
     </div>
   </body>
   <script>
   var width = 0;
-  var step = 10;
-  /*
-  var container = document.createElement("div");
-  var sub_container = document.createElement("div");
-  var btns = document.createElement("div");
-  var bar = document.createElement("div");
-  var buttonadd = document.createElement("button");
-  var buttonsub = document.createElement("button");
-  container.className = "container";
-  sub_container.className = "sub-container";
-  btns.className = "btns";
-  buttonadd.className = "add";
-  buttonsub.className = "sub";
-  bar.className = "counter";
-  $(document).ready(function () {
-    for(var i = 0; i < 5; i += 1) {
-      document.body.appendChild(container);
-      container.appendChild(btns);
-      container.appendChild(btns);
-      btns.appendChild(buttonsub);
-      btns.appendChild(buttonadd);
-      $(buttonsub).html('-');
-      $(buttonadd).html('+');
-      $(buttonsub).attr('id', 'sub'+i)
-      $(buttonadd).attr('id', 'add'+i)
-      container.appendChild(sub_container);
-      sub_container.appendChild(bar);
-      $(bar).html('0');
-      $(bar).css('width', '0%');
-    }
-  });
-  */
-  $('.sub').each(function() {
-          $(this).prop('disabled', true);
-  });
+  var step = 1;
 
   function move(element) {
     var elem = $(element).parent().siblings('.sub-container').children('.counter')
@@ -300,5 +134,52 @@
             }
       });
   }
+
+  var nbins = 12;
+  var labels_lower = [];
+  var labels_upper = [];
+
+  for (var i = 20; i < 80; i+=5) labels_lower.push(i)
+  for (var i = 24; i < 80; i+=5) labels_upper.push(i)
+
+  $(document).ready(function () {
+    for(var i = 0; i < nbins; i += 1) {
+      var container = document.createElement("div");
+      var sub_container = document.createElement("div");
+      var btns = document.createElement("div");
+      var bar = document.createElement("div");
+      var buttonadd = document.createElement("button");
+      var buttonsub = document.createElement("button");
+      var caption = document.createElement("span");
+      container.className = "container";
+      sub_container.className = "sub-container";
+      btns.className = "btns";
+      buttonadd.className = "add";
+      buttonsub.className = "sub";
+      bar.className = "counter";
+      document.body.appendChild(container);
+      container.appendChild(btns);
+      container.appendChild(btns);
+      btns.appendChild(buttonsub);
+      btns.appendChild(buttonadd);
+      $(buttonsub).html('-');
+      $(buttonadd).html('+');
+      $(buttonsub).attr('id', 'sub'+i);
+      $(buttonadd).attr('id', 'add'+i);
+      buttonsub.setAttribute('onclick', 'move(this);');
+      buttonadd.setAttribute('onclick', 'move(this);');
+      container.appendChild(caption);
+      $(caption).text(labels_lower[i] + '-' + labels_upper[i] + '%');
+      container.appendChild(sub_container);
+      sub_container.appendChild(bar);
+      $(bar).html('0');
+      $(bar).css('width', '0%');
+    }
+  });
+
+  $('.sub').each(function() {
+          $(this).prop('disabled', true);
+  });
+
   </script>
 </html>
