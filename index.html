@@ -54,6 +54,15 @@
         font-weight: 800;
         line-height: 1;
       }
+      .outer-wrapper {
+        width: 60%;
+        text-align: center;
+        padding: 20px 0px;
+      }
+      .inner-wrapper {
+        font-weight: 400;
+        font-size: 15px;
+      }
       @media screen and (max-width : 800px) {
         body {
           font-size: 12px !important;
@@ -68,7 +77,11 @@
     <div class="w3-container">
       <h2>Goldberg & Rothschild Question</h2>
       <p>Some description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+      <div class="outer-wrapper">
+        <span class='inner-wrapper'>There are <span class='sum'></span> left.</span>
+      </div>
     </div>
+
   </body>
   <script>
 
@@ -129,6 +142,7 @@
     $('.sub').each(function() {
             $(this).prop('disabled', true);
     });
+    $('.sum').html(100);
   });
 
   // paramters used for basic functionality
@@ -137,6 +151,7 @@
 
   // basic functionality for progress bars/buttons
   function move(element) {
+    // get the current element as well as its ID
     var elem = $(element).parent().siblings('.sub-container').children('.counter')
     var clicked_id = $(element).attr('id');
 
@@ -194,6 +209,7 @@
 
             }
       });
+      $('.sum').html(100-totalWidth);
   };
 
 
